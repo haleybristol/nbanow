@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn {
+  font-size: 11px !important;
+  border-radius: 0 !important;
+  box-shadow: 1px 1px 1px gray;
+  padding: 6px 16px !important;
+  margin-bottom: 5px;
+}
