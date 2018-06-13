@@ -3,5 +3,8 @@ nav {
   justify-content: space-between;
   background: black;
   color: white;
+}
 
+nav div {
+	margin: 0 20px;
 }
