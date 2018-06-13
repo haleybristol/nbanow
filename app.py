@@ -3,16 +3,12 @@ import requests
 import json
 import sys
 
-<<<<<<< HEAD
 if sys.platform in ["darwin", "win32"]:
-=======
-if sys.platform == "darwin":
->>>>>>> 05cf3a25f331f1c32a26985ccd5912d05529620f
     run_mode = "local"
 else:
     run_mode = "production"
 
-app=Flask(__name__)
+app = Flask(__name__)
 
 @app.route("/")
 @app.route("/index/")
@@ -38,11 +34,7 @@ def api_game_detail():
 @app.route("/test-api/stats-scoreboard/")
 def test_api_stats_scoreboard():
     game_date = request.args.get("game_date")
-<<<<<<< HEAD
     with open("static/data/stats-scoreboard/game_date=" + game_date.replace("/", "") + ".json", "r") as file:
-=======
-    with open("static/data/stats-scoreboard/game_date=" + game_date.replace("/", ":") + ".json", "r") as file:
->>>>>>> 05cf3a25f331f1c32a26985ccd5912d05529620f
         loaded = json.load(file)
     return jsonify(loaded)
 
@@ -58,5 +50,3 @@ def test_api_game_detail():
 @app.errorhandler(404)
 def page_not_found(e):
         return render_template("404.html", title="Page Not Found"), 404
-
-
