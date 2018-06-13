@@ -1,31 +1,42 @@
-var previousDate = '3/5/2018';
+var previousDate = '03/05/2018';
 
 function getGameIds(date) {
     return new Promise(function(resolve, reject) {
-          var gameIDs = [];
-    jQuery.getJSON("/api/stats-scoreboard?game_date=" + previousDate, function(data) {
-        scoreboard_data = data;
-        scoreboard_data.resultSets[0].rowSet.forEach(function(games) {
-            gameIDs.push(games[2]);
 
+        jQuery.getJSON("/test-api/stats-scoreboard?game_date=" + previousDate, function(data) {
+            scoreboard_data = data;
+            if (!scoreboard_data) {
+                console.log('no IDs')
+                reject()
+
+            } else {
+                var gameIDs = [];
+                scoreboard_data.resultSets[0].rowSet.forEach(function(games) {
+                    gameIDs.push(games[2]);
+                })
+                resolve(gameIDs);
+
+            }
         })
+
     })
-    if (gameIDs.length){
-      resolve(gameIDs);
-    }
-    else {
-      reject();
-      console.log('no Game IDs');
-    }
-  });
 }
 
 function getGameDetail(id) {
-    var gameDetail
-    jQuery.getJSON("/api/game-detail?gid=" + id, function(data) {
-        gameDetail = data;
+    return new Promise(function(resolve, reject) {
+
+        jQuery.getJSON("/test-api/game-detail?gid=" + id, function(data) {
+            if (!data) {
+                console.log("no games")
+                reject();
+            } else {
+                var gameDetail = data;
+                resolve(gameDetail)
+
+            }
+        })
     })
-    return gameDetail;
+
 }
 
 jQuery(document).ready(function() {
@@ -39,13 +50,29 @@ jQuery(document).ready(function() {
     }
 
     function render(date) {
-        console.log('calling render')
+        var pastDate = moment(date).format('dddd, MMM. D');
+        $(".game-day").append(pastDate);
         getGameIds(date).then(function(ids) {
             var proms = []
+            $("#loading-graphic").remove()
             ids.forEach(function(id) {
-                console.log("hey")
-                var gameInfo = getGameDetail(id)
-                console.log(gameInfo)
+                console.log("hey" + id)
+                getGameDetail(id).then(function(gameInfo) {
+                    var teamNames = gameInfo.g.gcode.split("/")[1];
+                    var homeTeam = teamNames.substring(3);
+                    var awayTeam = teamNames.substring(0, 3);
+                    console.log(gameInfo);
+                    var homeOvertime = parseInt(gameInfo.g.hls.ot1);
+                    var visOvertime = parseInt(gameInfo.g.vls.ot1);
+                    if (homeOvertime !== 0 && visOvertime !== 0 ) {
+                         $(".games").append('<div class="gameBox"><div class="final game"><div class="team-game-info"><div id="team"> <img class="team-logo img-responsive" src="http://i.cdn.turner.com/nba/nba/.element/media/2.0/teamsites/blazers/logos/' + gameInfo.g.vls.ta + '.png" /><h3 id="opp-total" class="text-center">' + gameInfo.g.vls.s + '</h3></div><div id="qtrscore"><div id="date" class="text-center"></div><table class="qtrscore"><tbody><tr><th class="qtrteam"></th><th class="qtr1">1</th><th class="qtr2">2</th><th class="qtr3">3</th><th class="qtr4">4</th><th class="ot">OT</th><th class="qtrtotal">T</th></tr><tr><td id="qtrteam1">' + gameInfo.g.vls.ta + '</td><td class="qtr1">' + gameInfo.g.vls.q1 + '</td><td class="qtr2">' + gameInfo.g.vls.q2 + '</td><td class="qtr3">' + gameInfo.g.vls.q3 + '</td><td class="qtr4">' + gameInfo.g.vls.q4 + '</td><td class="ot">' + gameInfo.g.vls.ot1 + '</td><td class="qtrtotal"><strong>' + gameInfo.g.vls.s + '</strong></td></tr><tr><td id="qtrteam2">' + gameInfo.g.hls.ta + '</td><td class="qtr1">' + gameInfo.g.hls.q1 + '</td><td class="qtr2">' + gameInfo.g.hls.q2 + '</td><td class="qtr3">' + gameInfo.g.hls.q3 + '</td><td class="qtr4">' + gameInfo.g.hls.q4 + '</td><td class="ot1">' + gameInfo.g.hls.ot1 + '</td><td class="qtrtotal"><strong>' + gameInfo.g.hls.s + '</strong></td></tr></tbody></table></div><div class="team"> <img class="team-logo img-responsive" src="http://i.cdn.turner.com/nba/nba/.element/media/2.0/teamsites/blazers/logos/' + gameInfo.g.hls.ta + '.png" /><h3 id="home-total" class="text-center">' + gameInfo.g.hls.s + '</h3></div></div></div></div>')
+                    }
+                    else {
+                        $(".games").append('<div class="gameBox"><div class="final game"><div class="team-game-info"><div id="team"> <img class="team-logo img-responsive" src="http://i.cdn.turner.com/nba/nba/.element/media/2.0/teamsites/blazers/logos/' + gameInfo.g.vls.ta + '.png" /><h3 id="opp-total" class="text-center">' + gameInfo.g.vls.s + '</h3></div><div id="qtrscore"><div id="date" class="text-center"></div><table class="qtrscore"><tbody><tr><th class="qtrteam"></th><th class="qtr1">1</th><th class="qtr2">2</th><th class="qtr3">3</th><th class="qtr4">4</th><th class="ot">OT</th><th class="qtrtotal">T</th></tr><tr><td id="qtrteam1">' + gameInfo.g.vls.ta + '</td><td class="qtr1">' + gameInfo.g.vls.q1 + '</td><td class="qtr2">' + gameInfo.g.vls.q2 + '</td><td class="qtr3">' + gameInfo.g.vls.q3 + '</td><td class="qtr4">' + gameInfo.g.vls.q4 + '</td><td class="qtrtotal"><strong>' + gameInfo.g.vls.s + '</strong></td></tr><tr><td id="qtrteam2">' + gameInfo.g.hls.ta + '</td><td class="qtr1">' + gameInfo.g.hls.q1 + '</td><td class="qtr2">' + gameInfo.g.hls.q2 + '</td><td class="qtr3">' + gameInfo.g.hls.q3 + '</td><td class="qtr4">' + gameInfo.g.hls.q4 + '</td></td><td class="qtrtotal"><strong>' + gameInfo.g.hls.s + '</strong></td></tr></tbody></table></div><div class="team"> <img class="team-logo img-responsive" src="http://i.cdn.turner.com/nba/nba/.element/media/2.0/teamsites/blazers/logos/' + gameInfo.g.hls.ta + '.png" /><h3 id="home-total" class="text-center">' + gameInfo.g.hls.s + '</h3></div></div></div></div>')
+                    }
+
+
+                })
             })
             Promise.all(proms).then(function() {
                 $(".game").remove();
@@ -56,9 +83,6 @@ jQuery(document).ready(function() {
 
     render()
 
-
-    var gameIDs = getGameIds(previousDate);
-    console.log(gameIDs);
     // gameIDs.forEach(function(id) {
     //     console.log("hey")
     //     var gameInfo = getGameDetail(id)
@@ -68,9 +92,9 @@ jQuery(document).ready(function() {
 }); /* End document.ready */
 
 // var gameIDs = [];
-var gameData = [];
-var activeGame;
-var activeGameInterval;
+// var gameData = [];
+// var activeGame;
+// var activeGameInterval;
 
 
 
@@ -101,7 +125,7 @@ var activeGameInterval;
 //         }
 //       });
 //     });
-//   }
+//   }round
 //   if (data.pb.r.length === 3) {
 //     round = data.pb.r[2].d;
 //     data.pb.r[2].co.forEach(function(v) {

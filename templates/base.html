@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
+{% if run_mode == "local" %}
+<script src="static/js/lib/jquery-3.3.1.min.js"></script>
+<script src="static/js/lib/es6-promise.min.js"></script>
+<script src="static/js/lib/es6-promise.auto.min.js"></script>
+<script src="static/js/lib/moment.js"></script>
+<!-- <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://i.cdn.turner.com/nba/nba/.element/media/2.0/teamsites/blazers/js/slick.js" type="text/javascript" charset="utf-8"></script> -->
+
+{% else %}
+<script src="static/js/lib/moment.js"></script>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="https://i.cdn.turner.com/nba/nba/.element/media/2.0/teamsites/blazers/js/slick.js" type="text/javascript" charset="utf-8"></script>
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
@@ -9,6 +20,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://i.cdn.turner.com/nba/nba/.element/media/2.0/teamsites/blazers/js/slick.js" type="text/javascript" charset="utf-8"></script>
+{% endif %}
+
+
 {% block headscripts %}
 {% endblock %}
 <body>
