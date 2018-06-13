@@ -12,7 +12,8 @@ def index():
 @app.route("/api/stats-scoreboard/")
 def api_stats_scoreboard():
     game_date = request.args.get("game_date")
-    r = requests.get("https://stats.nba.com/stats/scoreboard/?GameDate=" + game_date + "&LeagueID=00&DayOffset=0")
+    headers = {'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'}
+    r = requests.get("https://stats.nba.com/stats/scoreboard/?GameDate=" + game_date + "&LeagueID=00&DayOffset=0", headers=headers)
     return jsonify(r.json())
 
 @app.route("/api/game-detail/")
