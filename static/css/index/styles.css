@@ -12,7 +12,7 @@ body {
 
 #main-content {
     /*background-image: url('http://i.cdn.turner.com/drp/nba/blazers/sites/default/files/bball-giffy-v1.gif');*/
-    margin: 40px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -41,11 +41,14 @@ th {
 
 .games {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .game-box {
-    margin-right: 20px;
-    padding: 20px;
+    margin-top: 20px;
+    padding: 10px;
+    width: 350px;
 }
 
 .game-details {
@@ -98,6 +101,10 @@ th {
   background: peachpuff;
 }*/
 
+hr {
+    flex-shrink: 0;
+}
+
 .game-box {
     background: peachpuff;
 }
@@ -115,6 +122,10 @@ th {
 .team-logo {
     max-width: 50px;
     margin-top: 12px;
+}
+
+.svg-inline--fa.fa-w-18 {
+    width: 2em !important;
 }
 
 
