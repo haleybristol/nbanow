@@ -6,7 +6,7 @@ This website is live at [http://nbanow-207513.appspot.com/](http://nbanow-207513
 
 ## Setting up a local environment for development
 
-Here are the steps you have to take to run NBANOW on your localhost.
+Here are the steps you have to take to run nbanow on your localhost.
 
 #### Step 1 - Install Anaconda
 
