@@ -3,7 +3,7 @@ var previousDate = '03/05/2018';
 function getGameIds(date) {
     return new Promise(function(resolve, reject) {
 
-        jQuery.getJSON("/test-api/stats-scoreboard?game_date=" + previousDate, function(data) {
+        jQuery.getJSON("/api/stats-scoreboard?game_date=" + previousDate, function(data) {
             scoreboard_data = data;
             if (!scoreboard_data) {
                 console.log('no IDs')
@@ -25,7 +25,7 @@ function getGameIds(date) {
 function getGameDetail(id) {
     return new Promise(function(resolve, reject) {
 
-        jQuery.getJSON("/test-api/game-detail?gid=" + id, function(data) {
+        jQuery.getJSON("/api/game-detail?gid=" + id, function(data) {
             if (!data) {
                 console.log("no games")
                 reject();
